@@ -1,8 +1,9 @@
 package com.cg.drinkdelight.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
-
+@Entity
 public class RawMaterialStockEntity {
 	@Id
 	@Column(name = "raw_material_id", nullable = false) 
@@ -27,6 +28,13 @@ public class RawMaterialStockEntity {
 		return rawMaterialName;
 	}
 	public void setRawMaterialName(String rawMaterialName) {
+		this.rawMaterialName = rawMaterialName;
+	}
+	public RawMaterialStockEntity() {};
+	public RawMaterialStockEntity(long rawMaterialId, long rawMaterialQuantity, String rawMaterialName) {
+		super();
+		this.rawMaterialId = rawMaterialId;
+		this.rawMaterialQuantity = rawMaterialQuantity;
 		this.rawMaterialName = rawMaterialName;
 	}
 	

@@ -4,9 +4,11 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class SupplierEntity {
@@ -16,6 +18,8 @@ public class SupplierEntity {
 	
 	@Column(name = "supplier_name", nullable = false)
 	private String supplierName;
+    
+	//@ElementCollection  
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<RawMaterialStockEntity> rawMaterials;
 	public long getSupplierId() {
@@ -34,6 +38,13 @@ public class SupplierEntity {
 		return rawMaterials;
 	}
 	public void setRawMaterials(List<RawMaterialStockEntity> rawMaterials) {
+		this.rawMaterials = rawMaterials;
+	}
+	public SupplierEntity() {}
+	public SupplierEntity(long supplierId, String supplierName, List<RawMaterialStockEntity> rawMaterials) {
+		super();
+		this.supplierId = supplierId;
+		this.supplierName = supplierName;
 		this.rawMaterials = rawMaterials;
 	}
 	

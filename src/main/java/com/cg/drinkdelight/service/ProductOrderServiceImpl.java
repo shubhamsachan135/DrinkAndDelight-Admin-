@@ -1,5 +1,10 @@
 package com.cg.drinkdelight.service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Iterator;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -7,6 +12,10 @@ import com.cg.drinkdelight.dao.ProductOrderDao;
 import com.cg.drinkdelight.dao.ProductStockDao;
 import com.cg.drinkdelight.entity.ProductOrderEntity;
 import com.cg.drinkdelight.entity.ProductStockEntity;
+import com.cg.drinkdelight.entity.RawMaterialOrderEntity;
+import com.cg.drinkdelight.entity.RawMaterialStockEntity;
+import com.cg.drinkdelight.entity.SupplierEntity;
+import com.cg.drinkdelight.exception.ProductOrderException;
 import com.cg.drinkdelight.model.ProductOrderModel;
 
 @Service
@@ -15,6 +24,8 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 	 ProductOrderDao productOrderRepo;
 	 @Autowired 
 	 ProductStockDao productStockRepo;
+	 @Autowired 
+	 RawMaterialOrderServiceImpl rMatOrderService;
 	private ProductOrderEntity convertProductOrder(ProductOrderModel model) {
 		ProductOrderEntity entity = null;
 		if (model != null) {
@@ -52,11 +63,12 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 		return model;
 	}
 	@Override
-	public  ProductOrderModel confirmOrder(ProductOrderModel productModel) {
+	public  ProductOrderModel confirmOrder(ProductOrderModel productModel) throws ProductOrderException {
 		ProductOrderModel result=null;
-		ProductStockEntity pEntity=new ProductStockEntity();
+		//ProductStockEntity pEntity=new ProductStockEntity();
         long productId=productModel.getProductId();
-        if(pEntity.getProductId()==productId) {
+        ProductStockEntity pEntity=productStockRepo.findById(productId).orElse(null);
+        if( pEntity!=null) {
         if(pEntity.getProductQuantity() >= productModel.getQuantity()) {
         pEntity.setProductQuantity(pEntity.getProductQuantity()-productModel.getQuantity());
         productStockRepo.save(pEntity);
@@ -67,17 +79,23 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         else if(pEntity.getProductQuantity() < productModel.getQuantity() 
         		&& pEntity.getProductQuantity()!=0) {
         	long quantityNeeded=productModel.getQuantity()-pEntity.getProductQuantity();
-        	
+            pEntity.setProductQuantity(pEntity.getProductQuantity()-productModel.getQuantity());
+            productStockRepo.save(pEntity);
+            rMatOrderService.rawToFinished(quantityNeeded,productModel.getProductName());
+            result=convertProductOrder(productOrderRepo.
+            		save(convertProductOrder(productModel)));
         }
         else if(pEntity.getProductQuantity()==0)
         {
-        	//"Sorry we are Out of Stock......Exception "
+        	throw new ProductOrderException("We are out of Stock....Can't process Your Order");
         }
         }
-        else {//"Product is incorrect";
+        else {
+        	throw new ProductOrderException("Product Id not found");
         	}
         
         return result;
 	}
-
+	
+	
 }

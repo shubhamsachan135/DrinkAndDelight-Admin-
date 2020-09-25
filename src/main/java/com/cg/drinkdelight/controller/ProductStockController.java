@@ -8,21 +8,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cg.drinkdelight.dao.ProductStockDao;
+import com.cg.drinkdelight.entity.ProductStockEntity;
 import com.cg.drinkdelight.exception.ProductOrderException;
 import com.cg.drinkdelight.model.ProductOrderModel;
-import com.cg.drinkdelight.service.ProductOrderServiceImpl;
 
 @RestController
-@RequestMapping("/product")
-public class ProductOrderController {
+@RequestMapping("/saveProduct")
+public class ProductStockController {
 	@Autowired
-	ProductOrderServiceImpl pOrderService;
+	ProductStockDao pStockDao;
 	@PostMapping
-	public  ResponseEntity<ProductOrderModel> confirmOrder(@RequestBody ProductOrderModel productOrderModel) throws ProductOrderException
+	public  ResponseEntity<String> confirmOrder(@RequestBody ProductStockEntity productEntity) throws ProductOrderException
 	{
-		 productOrderModel=pOrderService.confirmOrder(productOrderModel);
+		pStockDao.save(productEntity);
 		
-		return new ResponseEntity<>(productOrderModel,HttpStatus.CREATED);
+		return new ResponseEntity<>("Product added to stock successfully",HttpStatus.OK);
 	}
-	
 }
