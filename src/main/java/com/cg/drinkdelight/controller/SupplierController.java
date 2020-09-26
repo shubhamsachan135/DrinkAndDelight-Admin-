@@ -21,23 +21,23 @@ public class SupplierController {
 	@GetMapping
 	public void saveSupplier() {
 	ArrayList<RawMaterialStockEntity> rList1=new ArrayList<RawMaterialStockEntity>();
-	rList1.add(new RawMaterialStockEntity(101,1000,"Mango"));
-	rList1.add(new RawMaterialStockEntity(102,1000,"Apple"));
-	rList1.add(new RawMaterialStockEntity(103,1000,"Kiwi"));
+	rList1.add(new RawMaterialStockEntity(101,2000,"Mango"));
+	rList1.add(new RawMaterialStockEntity(102,1800,"Apple"));
+	rList1.add(new RawMaterialStockEntity(103,1600,"Kiwi"));
 	SupplierEntity suppEntity1=new SupplierEntity(501,"Shubham",rList1);
 	suppDao.save(suppEntity1);
 	
 	ArrayList<RawMaterialStockEntity> rList2=new ArrayList<RawMaterialStockEntity>();
-	rList2.add(new RawMaterialStockEntity(201,1000,"Mango"));
-	rList2.add(new RawMaterialStockEntity(202,1000,"Apple"));
+	rList2.add(new RawMaterialStockEntity(201,1400,"Mango"));
+	rList2.add(new RawMaterialStockEntity(202,1200,"Apple"));
 	rList2.add(new RawMaterialStockEntity(203,1000,"Orange"));
 	SupplierEntity suppEntity2=new SupplierEntity(601,"Utkarsh",rList2);
 	suppDao.save(suppEntity2);
 	
 	ArrayList<RawMaterialStockEntity> rList3=new ArrayList<RawMaterialStockEntity>();
-	rList3.add(new RawMaterialStockEntity(301,1000,"Mango"));
-	rList3.add(new RawMaterialStockEntity(302,1000,"PineApple"));
-	rList3.add(new RawMaterialStockEntity(303,1000,"Cherry"));
+	rList3.add(new RawMaterialStockEntity(301,800,"Mango"));
+	rList3.add(new RawMaterialStockEntity(302,600,"PineApple"));
+	rList3.add(new RawMaterialStockEntity(303,400,"Cherry"));
 	SupplierEntity suppEntity3=new SupplierEntity(701,"Sudhanshu",rList3);
 	suppDao.save(suppEntity3);
 	}
