@@ -28,9 +28,9 @@ public class ProductStockController {
 	@PostMapping
 	public  ResponseEntity<String> saveProduct(@RequestBody ProductStockEntity productEntity) throws ProductOrderException
 	{
-		pStockDao.save(productEntity);
+		String message=pOrderService.saveProduct(productEntity);
 		
-		return new ResponseEntity<>("Product added to stock successfully",HttpStatus.OK);
+		return new ResponseEntity<>(message,HttpStatus.OK);
 	}
 	
 	@GetMapping("/trackProductStock") 

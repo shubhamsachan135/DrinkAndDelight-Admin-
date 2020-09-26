@@ -12,6 +12,7 @@ public interface ProductOrderService {
 	 List<ProductOrderModel> trackProductOrder(long id) throws ProductOrderException;
 	 public String updateProductOrder(ProductOrderModel pOrderModel) throws ProductOrderException;
 	 public List<ProductStockEntity> trackProductStock();
+	 public String saveProduct(ProductStockEntity productStockEntity) throws ProductOrderException;
 	 //String updateProductOrder(long orderId,DeliveryStatus status);
 	//List<ProductOrderModel> trackProductOrder(long id);
 	//boolean doesProductOrderIdExists(long id);

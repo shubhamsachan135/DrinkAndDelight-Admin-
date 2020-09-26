@@ -125,6 +125,23 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 		return pStockList;
 		
 	}
+	@Override
+	public String saveProduct(ProductStockEntity productStockEntity) throws ProductOrderException{
+		long productId=productStockEntity.getProductId();
+		ProductStockEntity productStockRepoEntity=productStockRepo.
+				findById(productId).orElse(null);
+		if(productStockRepoEntity!=null) {
+		productStockEntity.setProductQuantity(productStockEntity.getProductQuantity()+
+				productStockRepoEntity.getProductQuantity());
+		productStockRepo.save(productStockEntity);
+		}
+		else {
+			throw new ProductOrderException("Product Id is Wrong....can't add product to stock");
+		}
+		return "Product added to stock successfully";
+		
+	}
+	
 	
 	@Override
 	public String updateProductOrder(ProductOrderModel pOrderModel) throws ProductOrderException{

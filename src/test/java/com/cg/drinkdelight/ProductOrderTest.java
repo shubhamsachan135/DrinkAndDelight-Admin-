@@ -2,6 +2,7 @@ package com.cg.drinkdelight;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
@@ -49,4 +50,26 @@ public class ProductOrderTest {
 		assertEquals("No order found with this order Id", exception.getMessage());
 	}
 
+	@Test
+   	public void saveUserTest3() {
+		DeliveryStatus deliveryStatus = DeliveryStatus.CANCELLED;
+		ProductOrderEntity user =new ProductOrderEntity(114, 112, "MangoJuice", 1101, 2, LocalDate.parse("2020-10-06"),
+				LocalDate.parse("2020-10-16"), 50, 100, deliveryStatus);
+   		when(productRepo.save(user)).thenReturn(user);
+   		assertNotNull(user);
+   		
+   	}
+    
+    @Test
+   	public void saveUserTest4() {
+    	DeliveryStatus deliveryStatus = DeliveryStatus.CANCELLED;
+    	ProductOrderEntity user = new ProductOrderEntity(115, 112, "MangoJuice", 1101, 2, LocalDate.parse("2020-10-06"),
+				LocalDate.parse("2020-10-16"), 50, 100, deliveryStatus);
+   		ProductOrderEntity user2 = new ProductOrderEntity(114, 112, "MangoJuice", 1101, 2, LocalDate.parse("2020-10-06"),
+				LocalDate.parse("2020-10-16"), 50, 100, deliveryStatus);
+   		when(productRepo.save(user)).thenReturn(user);
+   		when(productRepo.save(user2)).thenReturn(user2);
+
+   	    assertNotSame(user, user2);
+}
 }
