@@ -17,35 +17,36 @@ import com.cg.drinkdelight.exception.ProductOrderException;
 import com.cg.drinkdelight.model.ProductOrderModel;
 import com.cg.drinkdelight.service.ProductOrderServiceImpl;
 
-
 @RestController
 @RequestMapping("/product")
 public class ProductOrderController {
 	@Autowired
 	ProductOrderServiceImpl pOrderService;
+
 	@PostMapping
-	public  ResponseEntity<ProductOrderModel> confirmOrder(@RequestBody ProductOrderModel productOrderModel) throws ProductOrderException
-	{
-		 productOrderModel=pOrderService.confirmOrder(productOrderModel);
-		
-		return new ResponseEntity<>(productOrderModel,HttpStatus.CREATED);
+	public ResponseEntity<ProductOrderModel> confirmOrder(@RequestBody ProductOrderModel productOrderModel)
+			throws ProductOrderException {
+		productOrderModel = pOrderService.confirmOrder(productOrderModel);
+
+		return new ResponseEntity<>(productOrderModel, HttpStatus.CREATED);
 	}
-	
-	@GetMapping("/trackOrder/{pid}") 
-	 public ResponseEntity<List<ProductOrderModel>> trackProductOrder(@PathVariable("pid") long id ) throws ProductOrderException {
-	 List<ProductOrderModel> orderList=null;
-	 ResponseEntity<List<ProductOrderModel>> result;
-	  
-	  orderList= pOrderService.trackProductOrder(id); 
-	  
-		 return result=new ResponseEntity<>(orderList,HttpStatus.OK); 
-	   
-	  }
+
+	@GetMapping("/trackOrder/{pid}")
+	public ResponseEntity<List<ProductOrderModel>> trackProductOrder(@PathVariable("pid") long id)
+			throws ProductOrderException {
+		List<ProductOrderModel> orderList = null;
+
+		orderList = pOrderService.trackProductOrder(id);
+
+		return new ResponseEntity<>(orderList, HttpStatus.OK);
+
+	}
+
 	@PutMapping
-	public  ResponseEntity<String> updateProductOrder(@RequestBody ProductOrderModel productOrderModel) throws ProductOrderException
-	{
-		 String updatedStatus=pOrderService.updateProductOrder(productOrderModel);
-		
-		return new ResponseEntity<>(updatedStatus,HttpStatus.OK);
+	public ResponseEntity<String> updateProductOrder(@RequestBody ProductOrderModel productOrderModel)
+			throws ProductOrderException {
+		String updatedStatus = pOrderService.updateProductOrder(productOrderModel);
+
+		return new ResponseEntity<>(updatedStatus, HttpStatus.OK);
 	}
 }

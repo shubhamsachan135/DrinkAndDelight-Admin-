@@ -12,19 +12,20 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import com.cg.drinkdelight.entity.DeliveryStatus;
+
 @Entity
 public class ProductOrderEntity {
 	@Id
 	@Column(name = "order_id", nullable = false)
 	private long orderId;
 
-	@Column(name = "product_Id", nullable = false)
+	@Column(name = "product_id", nullable = false)
 	private long productId;
 
 	@Column(name = "", nullable = false)
 	private String productName;
 
-	@Column(name = "distibutor_Id", nullable = false)
+	@Column(name = "distibutor_id", nullable = false)
 	private long distributorId;
 
 	@Column(name = "quantity", nullable = false)
@@ -47,8 +48,10 @@ public class ProductOrderEntity {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status")
 	private DeliveryStatus deliveryStatus;
-	
-	public ProductOrderEntity() {};
+
+	public ProductOrderEntity() {
+	};
+
 	public long getOrderId() {
 		return orderId;
 	}
@@ -144,6 +147,5 @@ public class ProductOrderEntity {
 		this.totalPrice = totalPrice;
 		this.deliveryStatus = deliveryStatus;
 	}
-	
 
 }

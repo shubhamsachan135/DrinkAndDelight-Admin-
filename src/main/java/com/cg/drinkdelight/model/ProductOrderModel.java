@@ -1,32 +1,22 @@
 package com.cg.drinkdelight.model;
 
 import java.time.LocalDate;
-
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
-
 import com.cg.drinkdelight.entity.DeliveryStatus;
 
 public class ProductOrderModel {
 
 	private long orderId;
-
 	private long productId;
 	private String productName;
-
 	private long distributorId;
-
 	private long quantity;
 	private LocalDate dateOfOrder;
 	private LocalDate expectedDeliveryDate;
 	private double pricePerUnit;
 	private double totalPrice;
 	private DeliveryStatus deliveryStatus;
+	
+	
 	public long getOrderId() {
 		return orderId;
 	}

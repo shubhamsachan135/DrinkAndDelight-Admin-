@@ -1,24 +1,17 @@
 package com.cg.drinkdelight.service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.cg.drinkdelight.dao.ProductOrderDao;
 import com.cg.drinkdelight.dao.ProductStockDao;
 import com.cg.drinkdelight.entity.ProductOrderEntity;
 import com.cg.drinkdelight.entity.ProductStockEntity;
-import com.cg.drinkdelight.entity.RawMaterialOrderEntity;
-import com.cg.drinkdelight.entity.RawMaterialStockEntity;
-import com.cg.drinkdelight.entity.SupplierEntity;
 import com.cg.drinkdelight.exception.ProductOrderException;
 import com.cg.drinkdelight.model.ProductOrderModel;
-import com.cg.drinkdelight.entity.DeliveryStatus;
+
 
 @Service
 public class ProductOrderServiceImpl implements ProductOrderService {
@@ -69,7 +62,6 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 	@Override
 	public ProductOrderModel confirmOrder(ProductOrderModel productModel) throws ProductOrderException {
 		ProductOrderModel result = null;
-		// ProductStockEntity pEntity=new ProductStockEntity();
 		long productId = productModel.getProductId();
 		ProductStockEntity pEntity = productStockRepo.findById(productId).orElse(null);
 		if (pEntity != null) {
@@ -79,11 +71,9 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 				result = convertProductOrder(productOrderRepo.save(convertProductOrder(productModel)));
 
 			}
-			// pEntity is for Stock
+			// pEntity is for ProductStockEntity
 			else if (pEntity.getProductQuantity() < productModel.getQuantity() && pEntity.getProductQuantity() != 0) {
-				System.out.println(productModel.getQuantity());
-				System.out.println(pEntity.getProductQuantity());
-				System.out.println(productModel.getQuantity() - pEntity.getProductQuantity());
+				
 				long quantityNeeded = productModel.getQuantity() - pEntity.getProductQuantity();
 				pEntity.setProductQuantity(pEntity.getProductQuantity() - pEntity.getProductQuantity());
 				productStockRepo.save(pEntity);
@@ -130,7 +120,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 		long productId=productStockEntity.getProductId();
 		ProductStockEntity productStockRepoEntity=productStockRepo.
 				findById(productId).orElse(null);
-		if(productStockRepoEntity!=null) {
+		if(productStockRepoEntity!=null && productStockRepoEntity.getProductQuantity()!=0 ) {
 		productStockEntity.setProductQuantity(productStockEntity.getProductQuantity()+
 				productStockRepoEntity.getProductQuantity());
 		productStockRepo.save(productStockEntity);

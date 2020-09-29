@@ -4,8 +4,6 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,13 +19,13 @@ public class RawMaterialOrderEntity {
 	@Column(name = "order_id", nullable = false)
 	private long orderId;
 
-	@Column(name = "rawmat_Id", nullable = false)
+	@Column(name = "rawmat_id", nullable = false)
 	private long rawMatId;
 
-	@Column(name = "", nullable = false)
+	@Column(name = "rawmat_name", nullable = false)
 	private String rawMatName;
 
-	@Column(name = "distibutor_Id", nullable = false)
+	@Column(name = "supplier_id", nullable = false)
 	private long supplierId;
 
 	@Column(name = "quantity", nullable = false)
